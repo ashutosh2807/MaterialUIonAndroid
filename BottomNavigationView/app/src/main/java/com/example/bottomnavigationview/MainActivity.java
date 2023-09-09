@@ -13,6 +13,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ImageView;
 
 import com.example.bottomnavigationview.fragments.homeFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -28,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         BottomNavigationView btnv = findViewById(R.id.bottomNavigationView);
         btnv.setBackground(null);
+
+
 
         replaceFragment(new homeFragment());
 
@@ -56,5 +59,7 @@ public class MainActivity extends AppCompatActivity {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         dialog.getWindow().setGravity(Gravity.BOTTOM);
+
+
     }
 }
