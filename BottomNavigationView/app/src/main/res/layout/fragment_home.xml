@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.homeFragment">
+
+    <TableLayout
+        android:id="@+id/tableData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#6A9E98">
+
+        <TableRow android:padding="3dp"
+            android:background="@color/teal_700">
+
+            <!-- Serial Number Column -->
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Serial Number"
+                android:gravity="center"
+                android:layout_margin="1dp"
+                android:background="@android:color/transparent"
+                android:layout_column="1" />
+
+            <!-- Patient Name Column -->
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Patient Name"
+                android:gravity="center"
+                android:layout_margin="1dp"
+                android:background="@android:color/transparent"
+                android:layout_column="2" />
+
+            <!-- Number of Visits Column -->
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Number of Visits"
+                android:gravity="center"
+                android:layout_margin="1dp"
+                android:background="@android:color/transparent"
+                android:layout_column="3" />
+
+            <!-- Last Visit Column -->
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Last Visit"
+                android:gravity="center"
+                android:layout_margin="1dp"
+                android:background="@android:color/transparent"
+                android:layout_column="4" />
+        </TableRow>
+
+        <!-- Rows with data will be added dynamically from Java code -->
+
+    </TableLayout>
+
+</FrameLayout>
