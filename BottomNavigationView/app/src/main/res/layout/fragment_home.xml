@@ -1,66 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.homeFragment">
 
-    <TableLayout
-        android:id="@+id/tableData"
+    <RelativeLayout
+        android:id="@+id/relLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#6A9E98">
+        android:layout_height="match_parent"
+        >
 
-        <TableRow android:padding="3dp"
-            android:background="@color/teal_700">
+        <LinearLayout
+            android:id="@+id/linear1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal"
+            android:padding="10dp">
 
-            <!-- Serial Number Column -->
-            <TextView
-                android:layout_width="0dp"
+            <Button
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Serial Number"
-                android:gravity="center"
                 android:layout_margin="1dp"
-                android:background="@android:color/transparent"
-                android:layout_column="1" />
+                android:backgroundTint="#080909"
+                android:text="All"
+                android:textAlignment="center"
+                android:textColor="@color/white" />
 
-            <!-- Patient Name Column -->
-            <TextView
-                android:layout_width="0dp"
+            <EditText
+                android:layout_width="160dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Patient Name"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:gravity="center"
-                android:layout_margin="1dp"
-                android:background="@android:color/transparent"
-                android:layout_column="2" />
+                android:textAlignment="center"
+                android:hint="    Enter OPD ID  "
+                android:maxLength="15"
+                android:textColorHint="@color/black"
+                android:autoHandwritingEnabled="true"
+                android:focusableInTouchMode="true"
+                android:focusedByDefault="false"
 
-            <!-- Number of Visits Column -->
-            <TextView
-                android:layout_width="0dp"
+                android:textColor="#9DEA88"
+
+                />
+
+            <Button
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Number of Visits"
-                android:gravity="center"
                 android:layout_margin="1dp"
-                android:background="@android:color/transparent"
-                android:layout_column="3" />
+                android:padding="10dp"
+                android:text="search"
+                android:textColor="@color/white"
+                android:backgroundTint="#6001ea"
+                android:layout_gravity="right"
+                />
 
-            <!-- Last Visit Column -->
-            <TextView
-                android:layout_width="0dp"
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@id/linear1">
+            <TableLayout
+                android:id="@+id/tableData"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Last Visit"
-                android:gravity="center"
-                android:layout_margin="1dp"
-                android:background="@android:color/transparent"
-                android:layout_column="4" />
-        </TableRow>
+                android:background="#6A9E98">
 
-        <!-- Rows with data will be added dynamically from Java code -->
+                <TableRow android:padding="3dp"
+                    android:background="@color/teal_700">
 
-    </TableLayout>
+                    <!-- Serial Number Column -->
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="OPD ID"
+                        android:gravity="center"
+                        android:layout_margin="1dp"
+                        android:background="@android:color/transparent"
+                        android:layout_column="1" />
+
+                    <!-- Patient Name Column -->
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Patient Name"
+                        android:gravity="center"
+                        android:layout_margin="1dp"
+                        android:background="@android:color/transparent"
+                        android:layout_column="2" />
+
+                    <!-- Number of Visits Column -->
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Number of Visits"
+                        android:gravity="center"
+                        android:layout_margin="1dp"
+                        android:background="@android:color/transparent"
+                        android:layout_column="3" />
+
+                    <!-- Last Visit Column -->
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Last Visit"
+                        android:gravity="center"
+                        android:layout_margin="1dp"
+                        android:background="@android:color/transparent"
+                        android:layout_column="4" />
+                </TableRow>
+
+                <!-- Rows with data will be added dynamically from Java code -->
+
+            </TableLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+
+
 
 </FrameLayout>
