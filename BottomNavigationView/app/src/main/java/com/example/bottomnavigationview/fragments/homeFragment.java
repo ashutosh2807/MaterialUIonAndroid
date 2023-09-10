@@ -1,5 +1,7 @@
 package com.example.bottomnavigationview.fragments;
 
+import static android.content.ContentValues.TAG;
+
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,21 +11,30 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.example.bottomnavigationview.R;
-import com.example.bottomnavigationview.profileData.profile;
+import com.example.bottomnavigationview.profileData.OnDocumentFetchListener;
+import com.example.bottomnavigationview.profileData.dbSingleton;
+import com.example.bottomnavigationview.profileData.fetchData;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link homeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public  class homeFragment extends Fragment {
+public  class homeFragment extends Fragment  {
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -72,8 +83,31 @@ public  class homeFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         TableLayout tableLayout = rootView.findViewById(R.id.tableData);
 
+        dbSingleton db = dbSingleton.getInstance();
+        db.setDocumentFetchListener(new OnDocumentFetchListener() {
+            @Override
+            public void onDocumentsFetched(List<Map<String, Object>> documentList) {
+                // Handle the retrieved data here
+                for (Map<String, Object> doc : documentList) {
+                    TableRow tableRow = new TableRow(getContext());
+                    for (Map.Entry<String, Object> entry : doc.entrySet()) {
+                        TextView textView = new TextView(getContext());
+                        TableRow.LayoutParams params = new TableRow.LayoutParams(
+                                TableRow.LayoutParams.WRAP_CONTENT,
+                                TableRow.LayoutParams.WRAP_CONTENT, 1f);
 
+                        textView.setLayoutParams(params);
+                        textView.setText(doc.get(entry.getKey()).toString());
+                        tableRow.addView(textView);
+                    }
+                    tableLayout.addView(tableRow);
+                }
 
+            }
+        });
+
+        // Call getDocuments
+        db.getDocuments();
         return rootView;
     }
 
