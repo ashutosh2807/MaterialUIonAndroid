@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,13 +14,16 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.example.bottomnavigationview.R;
+import com.example.bottomnavigationview.profileData.profile;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link homeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class homeFragment extends Fragment {
+public  class homeFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -68,30 +72,10 @@ public class homeFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         TableLayout tableLayout = rootView.findViewById(R.id.tableData);
 
-        // Example data - you can replace this with your actual data
-        String[][] rowData = {
-                {"1", "John Doe", "Team A", "100"},
-                {"2", "Jane Smith", "Team B", "90"},
-                // Add more rows as needed
-        };
 
-        for (String[] row : rowData) {
-            TableRow tableRow = new TableRow(getContext());
-
-            for (String cellData : row) {
-                TextView textView = new TextView(getContext());
-                textView.setLayoutParams(new TableRow.LayoutParams(
-                        TableRow.LayoutParams.WRAP_CONTENT,
-                        TableRow.LayoutParams.WRAP_CONTENT, 1f));
-                textView.setGravity(Gravity.CENTER);// Layout weight
-                textView.setText(cellData);
-
-                tableRow.addView(textView);
-            }
-
-            tableLayout.addView(tableRow);
-        }
 
         return rootView;
     }
+
+
 }

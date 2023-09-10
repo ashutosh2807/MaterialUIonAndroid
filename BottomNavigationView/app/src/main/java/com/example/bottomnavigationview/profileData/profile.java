@@ -15,7 +15,7 @@ public class profile {
     private String Gender;
     private String Phone_number;
     private String Address;
-    private ContactsContract.CommonDataKinds.Email Email;
+    private String Email;
     private Date DateOfBirth;
     private Date Registration_Time;
 
@@ -68,11 +68,11 @@ public class profile {
         Address = address;
     }
 
-    public ContactsContract.CommonDataKinds.Email getEmail() {
+    public String getEmail() {
         return Email;
     }
 
-    public void setEmail(ContactsContract.CommonDataKinds.Email email) {
+    public void setEmail(String email) {
         Email = email;
     }
 
@@ -93,7 +93,7 @@ public class profile {
     }
 
     public profile(String OPD_ID, String Name, String FatherName, String Gender,
-                   String Phone_number, String Address, ContactsContract.CommonDataKinds.Email Email, Date Dob) {
+                   String Phone_number, String Address, String Email, Date Dob) {
         this.OPD_ID = OPD_ID;
         this.Name = Name;
         this.FatherName = FatherName;
