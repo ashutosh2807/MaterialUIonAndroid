@@ -11,6 +11,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven { url = uri("https://oss.jfrog.org/artifactory/oss-snapshot-local") }
 //        maven("https://jitpack.io" )
     }
 }

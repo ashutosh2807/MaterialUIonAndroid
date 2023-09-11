@@ -11,5 +11,7 @@
     <color name="red">#EA0C22</color>
     <color name="skyblue">#51F4E5</color>
     <color name="yellow">#FBEB55</color>
+    <color name="column_color">#CF084C</color>
+    <color name="table_header_color">#6A9E98</color>
 
 </resources>

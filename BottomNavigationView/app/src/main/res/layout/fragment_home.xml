@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,8 +8,7 @@
     <RelativeLayout
         android:id="@+id/relLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:id="@+id/linear1"
@@ -38,97 +36,31 @@
                 android:layout_marginRight="5dp"
                 android:gravity="center"
                 android:textAlignment="center"
-                android:hint="    Enter OPD ID  "
+                android:hint="Enter OPD ID"
                 android:maxLength="15"
                 android:textColorHint="@color/black"
-                android:autoHandwritingEnabled="true"
-                android:focusableInTouchMode="true"
-                android:focusedByDefault="false"
-
-                android:textColor="#9DEA88"
-
-                />
+                android:textColor="#6A9E98"
+                android:inputType="textAutoComplete"
+                android:autofillHints="" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
                 android:padding="10dp"
-                android:text="search"
+                android:text="Search"
                 android:textColor="@color/white"
                 android:backgroundTint="#6001ea"
-                android:layout_gravity="right"
-                />
-
-
+                android:layout_gravity="right" />
         </LinearLayout>
+        <!-- item_layout.xml -->
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_below="@id/linear1">
-            <TableLayout
-                android:id="@+id/tableData"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#6A9E98">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/linear1"
+                    />
 
-                <TableRow android:padding="3dp"
-                    android:background="@color/teal_700">
-
-                    <!-- Serial Number Column -->
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="OPD ID"
-                        android:gravity="center"
-                        android:layout_margin="1dp"
-                        android:background="@android:color/transparent"
-                        android:layout_column="1" />
-
-                    <!-- Patient Name Column -->
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Patient Name"
-                        android:gravity="center"
-                        android:layout_margin="1dp"
-                        android:background="@android:color/transparent"
-                        android:layout_column="2" />
-
-                    <!-- Number of Visits Column -->
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Number of Visits"
-                        android:gravity="center"
-                        android:layout_margin="1dp"
-                        android:background="@android:color/transparent"
-                        android:layout_column="3" />
-
-                    <!-- Last Visit Column -->
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Last Visit"
-                        android:gravity="center"
-                        android:layout_margin="1dp"
-                        android:background="@android:color/transparent"
-                        android:layout_column="4" />
-                </TableRow>
-
-                <!-- Rows with data will be added dynamically from Java code -->
-
-            </TableLayout>
-        </LinearLayout>
     </RelativeLayout>
-
-
-
-
 </FrameLayout>

@@ -1,8 +1,18 @@
 package com.example.bottomnavigationview.profileData;
 
-import android.provider.ContactsContract;
+import static android.content.ContentValues.TAG;
 
-import java.sql.Timestamp;
+import android.provider.ContactsContract;
+import android.util.Log;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -104,6 +114,7 @@ public class profile {
         this.DateOfBirth = Dob;
         this.Registration_Time = new Date();
     }
+
 
     public Map getData(){
         Map map = new HashMap();

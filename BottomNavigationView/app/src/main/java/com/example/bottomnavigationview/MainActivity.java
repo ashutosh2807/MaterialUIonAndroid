@@ -15,8 +15,12 @@ import android.view.ViewGroup;
 import android.view.Window;
 
 import com.example.bottomnavigationview.fragments.homeFragment;
+import com.example.bottomnavigationview.profileData.dbSingleton;
+import com.example.bottomnavigationview.profileData.profile;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         btnv.setBackground(null);
 
 
+        dbSingleton.getInstance().saveToFirestore();
 
         replaceFragment(new homeFragment());
 
