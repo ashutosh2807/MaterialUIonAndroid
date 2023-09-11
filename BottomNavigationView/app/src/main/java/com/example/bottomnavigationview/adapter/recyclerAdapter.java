@@ -9,10 +9,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.bottomnavigationview.R;
 import com.example.bottomnavigationview.profileData.profile;
 
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyViewHolder>  {
@@ -44,7 +50,30 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         profile currentItem = profileDataArrayList.get(position);
-        holder.hTitle.setText(currentItem.getName());
+        holder.OPD_ID.setText("OPD_ID: "+ currentItem.getOPD_ID().toUpperCase());
+        holder.Name.setText("Name: "+ (currentItem.getName().substring(0,1).toUpperCase()) + (currentItem.getName().substring(1,currentItem.getName().toString().length())));
+        holder.Gender.setText("Gender: "+currentItem.getGender().toString().toUpperCase());
+
+        holder.Mobile.setText("Mobile: "+currentItem.getPhone_number().toString().toUpperCase());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        Calendar birthdateCalendar = Calendar.getInstance();
+        birthdateCalendar.setTime(currentItem.getDateOfBirth());
+
+        Calendar currentCalendar = Calendar.getInstance();
+        currentCalendar.setTime(new Date());
+
+        // Calculate the age
+        int age = currentCalendar.get(Calendar.YEAR) - birthdateCalendar.get(Calendar.YEAR);
+
+        // Check if the birthdate has occurred this year
+        if (currentCalendar.get(Calendar.DAY_OF_YEAR) < birthdateCalendar.get(Calendar.DAY_OF_YEAR)) {
+            age--;
+        }
+
+        holder.Age.setText("Age: "+ String.valueOf(age));
+        holder.Address.setText("Address: "+ currentItem.getAddress() );
+        holder.Last_visit.setText("Last_visit: "+ dateFormat.format(new Date()) );
 
     }
 
@@ -54,15 +83,23 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView hTitle;
-        TextView hid;
-        TextView hinfo;
+        TextView Name;
+        TextView OPD_ID;
+        TextView Gender;
+        TextView Age;
+        TextView Mobile;
+        TextView Address;
+        TextView Last_visit;
 
         public MyViewHolder(View itemView, final onItemClickListener listener) {
             super(itemView);
-            hTitle = itemView.findViewById(com.example.bottomnavigationview.R.id.headingTitle);
-            hid = itemView.findViewById(com.example.bottomnavigationview.R.id.hid);
-            hinfo = itemView.findViewById(com.example.bottomnavigationview.R.id.hinfo);
+            OPD_ID = itemView.findViewById(com.example.bottomnavigationview.R.id.OPD_ID);
+            Name = itemView.findViewById(com.example.bottomnavigationview.R.id.Name);
+            Gender = itemView.findViewById(com.example.bottomnavigationview.R.id.Gender);
+            Age = itemView.findViewById(com.example.bottomnavigationview.R.id.Age);
+            Mobile = itemView.findViewById(com.example.bottomnavigationview.R.id.Mobile);
+            Address = itemView.findViewById(com.example.bottomnavigationview.R.id.Address);
+            Last_visit = itemView.findViewById(com.example.bottomnavigationview.R.id.Last_visit);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

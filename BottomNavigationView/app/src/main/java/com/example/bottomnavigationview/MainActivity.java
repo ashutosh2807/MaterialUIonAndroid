@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         btnv.setBackground(null);
 
 
-        dbSingleton.getInstance().saveToFirestore();
+//        dbSingleton.getInstance().saveToFirestore();
 
         replaceFragment(new homeFragment());
 

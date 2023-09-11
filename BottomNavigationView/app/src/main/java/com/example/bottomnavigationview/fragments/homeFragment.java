@@ -16,6 +16,7 @@ import com.example.bottomnavigationview.adapter.recyclerAdapter;
 import com.example.bottomnavigationview.profileData.OnDocumentFetchListener;
 import com.example.bottomnavigationview.profileData.dbSingleton;
 import com.example.bottomnavigationview.profileData.profile;
+import com.google.firebase.Timestamp;
 
 
 import java.util.ArrayList;
@@ -62,7 +63,7 @@ public class homeFragment extends Fragment {
                                 doc.get("Phone_number").toString(),
                                 doc.get("Address").toString(),
                                 doc.get("Email").toString(),
-                                new Date()
+                                ((Timestamp) doc.get("Dob")).toDate()
                         );
                         profileList.add(data);
 

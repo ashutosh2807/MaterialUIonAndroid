@@ -8,42 +8,69 @@
     android:id="@+id/cardItem">
 
     <LinearLayout
+        android:padding="10dp"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:elevation="20dp"
         >
 
-        <!--        <com.google.android.material.imageview.ShapeableImageView-->
-        <!--            android:layout_width="100dp"-->
-        <!--            android:layout_height="100dp"-->
-        <!--            android:scaleType="centerCrop"-->
-        <!--            android:id="@+id/headingImage"-->
-        <!--            android:layout_margin="10dp"-->
-        <!--            app:shapeAppearanceOverlay="@style/SoftCorner">-->
-
-        <!--        </com.google.android.material.imageview.ShapeableImageView>-->
-
         <TextView
+            android:id="@+id/OPD_ID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/headingTitle"
-            android:textStyle="bold"
-            android:layout_gravity="center">
-
-        </TextView>
-        <TextView
-            android:id="@+id/hid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            >
-
-        </TextView>
-
-        <TextView
-            android:id="@+id/hinfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:layout_gravity="center"
             />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/Name"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:layout_gravity="center" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/Gender"
+            android:textStyle="bold"
+            android:textSize="18dp"
+            android:layout_gravity="center" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/Age"
+            android:textStyle="bold"
+            android:textSize="16dp"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/Mobile"
+            android:textStyle="bold"
+            android:textSize="15dp"
+            android:layout_gravity="center" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/Address"
+            android:textStyle="bold"
+            android:textSize="12dp"
+            android:layout_gravity="center" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/Last_visit"
+            android:textStyle="bold"
+            android:textSize="12dp"
+            android:layout_gravity="center" />
+
+
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

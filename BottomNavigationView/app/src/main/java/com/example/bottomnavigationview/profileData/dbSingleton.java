@@ -43,40 +43,40 @@ public class dbSingleton {
     }
 
 
-    public void saveToFirestore() {
-        Map<String,Object> profileData = new HashMap<>();
-        profileData.put("OPD_ID", "gjeior");
-        profileData.put("Name", "ashutosh");
-        profileData.put("FatherName", "Raysingh");
-        profileData.put("Gender", "M");
-        profileData.put("Phone_number", "7693932810");
-        profileData.put("Address", "Address");
-        profileData.put("Email", "Email");
-        profileData.put("Age", "Age");
-        profileData.put("Time",  new Timestamp(new Date()));
-        profileData.put("Visit_date", "visit_date");
-
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        Map<String, Map<String, Object>> data = new HashMap<String, Map<String, Object>>();
-        data.put("Test",profileData);
-
-        db.collection("UserDetails")
-                .document("Test")
-                .set(profileData)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        // message
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // no message
-                    }
-                });
-    }
+//    public void saveToFirestore() {
+//        Map<String,Object> profileData = new HashMap<>();
+//        profileData.put("OPD_ID", "gjeior");
+//        profileData.put("Name", "ashutosh");
+//        profileData.put("FatherName", "Raysingh");
+//        profileData.put("Gender", "M");
+//        profileData.put("Phone_number", "7693932810");
+//        profileData.put("Address", "Address");
+//        profileData.put("Email", "Email");
+//        profileData.put("Age", "Age");
+//        profileData.put("Time",  new Timestamp(new Date()));
+//        profileData.put("Visit_date", "visit_date");
+//
+//
+//        FirebaseFirestore db = FirebaseFirestore.getInstance();
+//        Map<String, Map<String, Object>> data = new HashMap<String, Map<String, Object>>();
+//        data.put("Test",profileData);
+//
+//        db.collection("UserDetails")
+//                .document("Test")
+//                .set(profileData)
+//                .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                    @Override
+//                    public void onSuccess(Void aVoid) {
+//                        // message
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        // no message
+//                    }
+//                });
+//    }
 
 
     public void getDocuments() {
