@@ -29,7 +29,6 @@ import java.util.Map;
 public class homeFragment extends Fragment {
     private recyclerAdapter adptr;
     private HomeViewModel viewModel;
-    private List<profile> profileList = new ArrayList<>();
     private dbSingleton db;
     private boolean dataFetched = false;
 
