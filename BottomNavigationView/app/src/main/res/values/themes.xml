@@ -16,6 +16,10 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="PopAnimation">
+        <item name="android:windowEnterAnimation">@anim/popup_show_animation</item>
+        <item name="android:windowExitAnimation">@anim/popup_dismiss_animation</item>
+    </style>
     <style name="DialogAnimation">
         <item name="android:windowEnterAnimation">@anim/slideinbottom</item>
         <item name="android:windowExitAnimation">@anim/slideoutbottom</item>

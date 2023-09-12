@@ -12,6 +12,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -43,40 +44,44 @@ public class dbSingleton {
     }
 
 
-//    public void saveToFirestore() {
-//        Map<String,Object> profileData = new HashMap<>();
-//        profileData.put("OPD_ID", "gjeior");
-//        profileData.put("Name", "ashutosh");
-//        profileData.put("FatherName", "Raysingh");
-//        profileData.put("Gender", "M");
-//        profileData.put("Phone_number", "7693932810");
-//        profileData.put("Address", "Address");
-//        profileData.put("Email", "Email");
-//        profileData.put("Age", "Age");
-//        profileData.put("Time",  new Timestamp(new Date()));
-//        profileData.put("Visit_date", "visit_date");
-//
-//
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//        Map<String, Map<String, Object>> data = new HashMap<String, Map<String, Object>>();
-//        data.put("Test",profileData);
-//
-//        db.collection("UserDetails")
-//                .document("Test")
-//                .set(profileData)
-//                .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                    @Override
-//                    public void onSuccess(Void aVoid) {
-//                        // message
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        // no message
-//                    }
-//                });
-//    }
+    public void saveToFirestore() {
+        List<Timestamp> data_visited = new ArrayList<>();
+        for(int i= 0; i<5;i++){
+            data_visited.add(new Timestamp(new Date()));
+        }
+        Map<String,Object> profileData = new HashMap<>();
+        profileData.put("OPD_ID", "12345test");
+        profileData.put("Name", "test");
+        profileData.put("FatherName", "testFather");
+        profileData.put("Gender", "M");
+        profileData.put("Phone_number", "7693932810");
+        profileData.put("Address", "Address");
+        profileData.put("Email", "Email");
+        profileData.put("Dob", new Timestamp(new Date()));
+        profileData.put("Time",  new Timestamp(new Date()));
+        profileData.put("Visit_date", data_visited);
+
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Map<String, Map<String, Object>> data = new HashMap<String, Map<String, Object>>();
+        data.put("Test3",profileData);
+
+        db.collection("UserDetails")
+                .document("Test3")
+                .set(profileData)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // message
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // no message
+                    }
+                });
+    }
 
 
     public void getDocuments() {

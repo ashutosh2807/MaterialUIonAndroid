@@ -14,6 +14,9 @@ public class HomeViewModel extends ViewModel {
         return profileList;
     }
 
+    public profile getProfile(int position){
+        return  profileList.get(position);
+    }
     public void setProfileList(List<profile> newList) {
         profileList.clear();
         profileList.addAll(newList);

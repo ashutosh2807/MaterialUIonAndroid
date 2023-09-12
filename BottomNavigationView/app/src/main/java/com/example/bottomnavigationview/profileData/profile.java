@@ -13,9 +13,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class profile {
@@ -29,6 +31,18 @@ public class profile {
     private Date DateOfBirth;
     private Date Registration_Time;
 
+    private  List<Timestamp> visit_dates;
+
+    public  List<Timestamp>  getVisit_dates() {
+        return visit_dates;
+    }
+
+    public Timestamp getLastVisit(){
+        return visit_dates.get(visit_dates.size()-1);
+    }
+    public void setVisit_dates( List<Timestamp>  visit_dates) {
+        this.visit_dates = visit_dates;
+    }
 
     public String getOPD_ID() {
         return OPD_ID;
@@ -103,7 +117,7 @@ public class profile {
     }
 
     public profile(String OPD_ID, String Name, String FatherName, String Gender,
-                   String Phone_number, String Address, String Email, Date Dob) {
+                   String Phone_number, String Address, String Email, Date Dob, List<Timestamp>  Visit_dates) {
         this.OPD_ID = OPD_ID;
         this.Name = Name;
         this.FatherName = FatherName;
@@ -113,6 +127,7 @@ public class profile {
         this.Email = Email;
         this.DateOfBirth = Dob;
         this.Registration_Time = new Date();
+        this.visit_dates = Visit_dates;
     }
 
 

@@ -1,11 +1,19 @@
 package com.example.bottomnavigationview.fragments;
 
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.LinearLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -14,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bottomnavigationview.R;
+import com.example.bottomnavigationview.adapter.DialogAdapter;
 import com.example.bottomnavigationview.adapter.recyclerAdapter;
 import com.example.bottomnavigationview.profileData.OnDocumentFetchListener;
 import com.example.bottomnavigationview.profileData.dbSingleton;
@@ -23,6 +32,7 @@ import com.google.firebase.Timestamp;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -65,6 +75,13 @@ public class homeFragment extends Fragment {
             fetchData();
         }
 
+        adptr.setOnItemClickListener(new recyclerAdapter.onItemClickListener() {
+            @Override
+            public void onItemClicking(int position) {
+                profile pdata =  viewModel.getProfile(position);
+                showDialog(pdata);
+            }
+        });
         return rootView;
     }
 
@@ -84,6 +101,42 @@ public class homeFragment extends Fragment {
         }
     }
 
+    private  void showDialog(profile data){
+        final Dialog dialog = new Dialog(requireContext());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.detailed_dialog);
+
+        // Find and populate views in the dialog with pdata's data
+        TextView OPD = dialog.findViewById(R.id.tvOPD);
+        OPD.setText(data.getOPD_ID());
+
+        TextView Name = dialog.findViewById(R.id.tvName);
+        Name.setText(data.getName());
+
+        TextView tvPhone = dialog.findViewById(R.id.tvPhone);
+        tvPhone.setText(data.getPhone_number());
+
+        TextView tvGender = dialog.findViewById(R.id.tvGender);
+        tvGender.setText(data.getGender());
+
+        LinearLayout layout = dialog.findViewById(R.id.LinearBase);
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        RecyclerView rView = dialog.findViewById(R.id.RecyclerDialog);
+        DialogAdapter Dadptr = new DialogAdapter(data.getVisit_dates(),getActivity());
+        rView.setAdapter(Dadptr);
+        rView.setLayoutManager(new LinearLayoutManager(requireContext()));
+
+        dialog.show();
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.PopAnimation;
+        dialog.getWindow().setGravity(Gravity.CENTER);
+    }
     private void fetchData() {
         // Fetch new data from Firebase
         db.setDocumentFetchListener(new OnDocumentFetchListener() {
@@ -101,7 +154,8 @@ public class homeFragment extends Fragment {
                             doc.get("Phone_number").toString(),
                             doc.get("Address").toString(),
                             doc.get("Email").toString(),
-                            ((Timestamp) doc.get("Dob")).toDate()
+                            ((Timestamp) doc.get("Dob")).toDate(),
+                            ( List<Timestamp> ) doc.get("Visit_date")
                     );
                     newData.add(data);
                 }
