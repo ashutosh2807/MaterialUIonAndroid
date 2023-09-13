@@ -44,30 +44,31 @@ public class dbSingleton {
     }
 
 
-    public void saveToFirestore() {
+    public void saveToFirestore(String Name,String FatherName, String OPD_ID, String Phone_number,
+                                String Gender,
+                                String Email, String Address, Date Dob) {
         List<Timestamp> data_visited = new ArrayList<>();
-        for(int i= 0; i<5;i++){
-            data_visited.add(new Timestamp(new Date()));
-        }
+        data_visited.add(new Timestamp(new Date()));
+
         Map<String,Object> profileData = new HashMap<>();
-        profileData.put("OPD_ID", "12345test");
-        profileData.put("Name", "test");
-        profileData.put("FatherName", "testFather");
-        profileData.put("Gender", "M");
-        profileData.put("Phone_number", "7693932810");
-        profileData.put("Address", "Address");
-        profileData.put("Email", "Email");
-        profileData.put("Dob", new Timestamp(new Date()));
+        profileData.put("OPD_ID", OPD_ID);
+        profileData.put("Name", Name);
+        profileData.put("FatherName", FatherName);
+        profileData.put("Gender", Gender);
+        profileData.put("Phone_number", Phone_number);
+        profileData.put("Address", Address);
+        profileData.put("Email", Email);
+        profileData.put("Dob", new Timestamp(Dob));
         profileData.put("Time",  new Timestamp(new Date()));
         profileData.put("Visit_date", data_visited);
 
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         Map<String, Map<String, Object>> data = new HashMap<String, Map<String, Object>>();
-        data.put("Test3",profileData);
+        data.put(OPD_ID,profileData);
 
         db.collection("UserDetails")
-                .document("Test3")
+                .document(OPD_ID)
                 .set(profileData)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

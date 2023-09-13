@@ -42,4 +42,7 @@ public class HomeViewModel extends ViewModel {
         profileList.clear();
         profileList.addAll(newList);
     }
+    public  void  truncate(){
+        profileList = new ArrayList<>();
+    }
 }

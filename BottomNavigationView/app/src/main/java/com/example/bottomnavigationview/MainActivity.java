@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -15,26 +16,21 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.bottomnavigationview.fragments.AddPatient;
 import com.example.bottomnavigationview.fragments.homeFragment;
-import com.example.bottomnavigationview.profileData.dbSingleton;
-import com.example.bottomnavigationview.profileData.profile;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.Date;
+import javax.annotation.Nullable;
 
 public class MainActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         BottomNavigationView btnv = findViewById(R.id.bottomNavigationView);
         btnv.setBackground(null);
-
-
 
 //        dbSingleton.getInstance().saveToFirestore();
 
@@ -48,7 +44,20 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Refresh data in the homeFragment when MainActivity is resumed
+        homeFragment fragment = (homeFragment) getSupportFragmentManager().findFragmentById(R.id.frame_layout);
+        if (fragment != null) {
+            fragment.fetchData();
+        }
+    }
+
     private  void replaceFragment(Fragment fragment) {
+
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frame_layout, fragment);
@@ -64,7 +73,9 @@ public class MainActivity extends AppCompatActivity {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                replaceFragment(new AddPatient());
+                Intent intent = new Intent(MainActivity.this, AddPatient.class);
+                startActivity(intent);
+                dialog.dismiss();
             }
         });
 

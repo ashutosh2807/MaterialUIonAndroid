@@ -34,6 +34,7 @@ import com.example.bottomnavigationview.viewModels.HomeViewModel;
 import com.google.firebase.Timestamp;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -124,6 +125,9 @@ public class homeFragment extends Fragment {
         TextView tvGender = dialog.findViewById(R.id.tvGender);
         tvGender.setText(data.getGender());
 
+        TextView tvTotalVisits = dialog.findViewById(R.id.tvTotalVisits);
+        tvTotalVisits.setText(String.valueOf(data.getVisit_dates().size()));
+
         LinearLayout layout = dialog.findViewById(R.id.LinearBase);
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,8 +135,13 @@ public class homeFragment extends Fragment {
                 dialog.dismiss();
             }
         });
+
+        List<Timestamp> visits = data.getVisit_dates();
+
+        Collections.reverse(visits);
+
         RecyclerView rView = dialog.findViewById(R.id.RecyclerDialog);
-        DialogAdapter Dadptr = new DialogAdapter(data.getVisit_dates(),getActivity());
+        DialogAdapter Dadptr = new DialogAdapter(visits,getActivity());
         rView.setAdapter(Dadptr);
         rView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
@@ -142,7 +151,8 @@ public class homeFragment extends Fragment {
         dialog.getWindow().getAttributes().windowAnimations = R.style.PopAnimation;
         dialog.getWindow().setGravity(Gravity.CENTER);
     }
-    private void fetchData() {
+
+    public void fetchData() {
         // Fetch new data from Firebase
         db.setDocumentFetchListener(new OnDocumentFetchListener() {
             @Override
@@ -163,7 +173,6 @@ public class homeFragment extends Fragment {
                             ( List<Timestamp> ) doc.get("Visit_date")
                     );
                     newData.add(data);
-
                 }
 
                 // Update the ViewModel with the new data
