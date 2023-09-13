@@ -14,44 +14,22 @@
             android:id="@+id/linear1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="2dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="4dp"
             android:orientation="horizontal"
             android:padding="10dp">
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="1dp"
-                android:backgroundTint="#080909"
-                android:text="All"
-                android:textAlignment="center"
-                android:textColor="@color/white" />
 
-            <EditText
-                android:layout_width="160dp"
+
+            <AutoCompleteTextView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/autocomplete_country"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_gravity="center"
                 android:gravity="center"
-                android:textAlignment="center"
                 android:hint="Enter OPD ID"
-                android:maxLength="15"
-                android:textColorHint="@color/black"
-                android:textColor="#6A9E98"
-                android:inputType="textAutoComplete"
-                android:autofillHints="" />
+                />
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="1dp"
-                android:padding="10dp"
-                android:text="Search"
-                android:textColor="@color/white"
-                android:backgroundTint="#6001ea"
-                android:layout_gravity="right" />
         </LinearLayout>
         <!-- item_layout.xml -->
 

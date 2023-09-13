@@ -14,7 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.example.bottomnavigationview.fragments.AddPatient;
 import com.example.bottomnavigationview.fragments.homeFragment;
 import com.example.bottomnavigationview.profileData.dbSingleton;
 import com.example.bottomnavigationview.profileData.profile;
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         BottomNavigationView btnv = findViewById(R.id.bottomNavigationView);
         btnv.setBackground(null);
+
 
 
 //        dbSingleton.getInstance().saveToFirestore();
@@ -56,6 +59,15 @@ public class MainActivity extends AppCompatActivity {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.bottom_sheet_layout);
+
+        TextView textView = dialog.findViewById(R.id.Addpatient);
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                replaceFragment(new AddPatient());
+            }
+        });
+
         ImageView imageView = dialog.findViewById(R.id.cancelButton);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override

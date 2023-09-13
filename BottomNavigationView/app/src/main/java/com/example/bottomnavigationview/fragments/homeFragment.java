@@ -10,6 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -82,6 +85,8 @@ public class homeFragment extends Fragment {
                 showDialog(pdata);
             }
         });
+
+
         return rootView;
     }
 
@@ -158,16 +163,56 @@ public class homeFragment extends Fragment {
                             ( List<Timestamp> ) doc.get("Visit_date")
                     );
                     newData.add(data);
+
                 }
 
                 // Update the ViewModel with the new data
                 viewModel.setProfileList(newData);
 
+                AutoCompleteTextView textView = (AutoCompleteTextView) getView().findViewById(R.id.autocomplete_country);
+                List<String> profile_names = new ArrayList<>();
+
+                for(profile p : viewModel.getProfileList()){
+                    profile_names.add(p.getOPD_ID());
+                }
+                profile_names.add("All");
                 // Notify the adapter that the data has changed
                 if (adptr != null) {
                     adptr.notifyDataSetChanged();
                 }
+
+
+                String[] profileNamesArray = profile_names.toArray(new String[0]);
+                ArrayAdapter<String> adapter =
+                        new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, profileNamesArray);
+                textView.setAdapter(adapter);
+
+                textView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        String selectedItem = (String) adapterView.getItemAtPosition(i);
+                        RecyclerView rView = getView().findViewById(R.id.recyclerView);
+                        adptr = new recyclerAdapter(viewModel.getAProfileInList(selectedItem), requireActivity());
+                        rView.setAdapter(adptr);
+                        rView.setLayoutManager(new LinearLayoutManager(requireContext()));
+                        adptr.setOnItemClickListener(new recyclerAdapter.onItemClickListener() {
+                            @Override
+                            public void onItemClicking(int position) {
+                                if(selectedItem == "All"){
+                                    profile pdata = viewModel.getProfile(position);
+                                    showDialog(pdata);
+                                }
+                                else {
+                                    profile pdata =  viewModel.getProfileWithOPD(selectedItem);
+                                    showDialog(pdata);
+                                }
+
+                            }
+                        });
+                    }
+                });
             }
+
         });
 
         db.getDocuments();

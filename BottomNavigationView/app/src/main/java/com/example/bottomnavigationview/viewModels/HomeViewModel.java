@@ -14,6 +14,27 @@ public class HomeViewModel extends ViewModel {
         return profileList;
     }
 
+    public List<profile> getAProfileInList(String s){
+        List<profile> profilelist1 = new ArrayList<>();
+        if(s.equals("All")){
+            return  profileList;
+        }
+        for(profile p: profileList){
+            if(p.getOPD_ID().equals(s)){ // Use .equals() for string comparison
+                profilelist1.add(p); // Add the matching profile to the result list
+            }
+        }
+        return profilelist1;
+    }
+
+    public profile getProfileWithOPD(String OPD){
+        for(profile pdata: profileList){
+            if(pdata.getOPD_ID().equals(OPD)){ // Use .equals() for string comparison
+               return pdata; // Add the matching profile to the result list
+            }
+        }
+        return null;
+    }
     public profile getProfile(int position){
         return  profileList.get(position);
     }
