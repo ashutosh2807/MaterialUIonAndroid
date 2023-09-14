@@ -83,6 +83,7 @@
             android:src="@drawable/update"/>
 
         <TextView
+            android:id="@+id/tvMarkVisit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Update Visit Date"
@@ -109,6 +110,7 @@
             android:src="@drawable/delete"/>
 
         <TextView
+            android:id="@+id/tvDeletePatient"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Delete Patient Info"

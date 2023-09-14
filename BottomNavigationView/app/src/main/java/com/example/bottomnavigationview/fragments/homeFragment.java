@@ -50,10 +50,6 @@ public class homeFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static homeFragment newInstance() {
-        return new homeFragment();
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -208,10 +204,12 @@ public class homeFragment extends Fragment {
                             @Override
                             public void onItemClicking(int position) {
                                 if(selectedItem == "All"){
+                                    textView.clearFocus();
                                     profile pdata = viewModel.getProfile(position);
                                     showDialog(pdata);
                                 }
                                 else {
+                                    textView.clearFocus();
                                     profile pdata =  viewModel.getProfileWithOPD(selectedItem);
                                     showDialog(pdata);
                                 }

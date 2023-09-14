@@ -1,5 +1,6 @@
 package com.example.bottomnavigationview;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -11,18 +12,18 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.bottomnavigationview.fragments.homeFragment;
+import com.example.bottomnavigationview.fragments.profileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import javax.annotation.Nullable;
 
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -32,9 +33,26 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView btnv = findViewById(R.id.bottomNavigationView);
         btnv.setBackground(null);
 
-//        dbSingleton.getInstance().saveToFirestore();
-
         replaceFragment(new homeFragment());
+        btnv.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Fragment fragment = null;
+                if (item.getItemId() == R.id.home) {
+                    fragment = new homeFragment();
+                } else if (item.getItemId() == R.id.profile) {
+                    fragment = new profileFragment();
+                }
+
+                // Replace the current fragment with the selected fragment
+                if (fragment != null) {
+                    replaceFragment(fragment);
+                }
+
+                return true;
+            }
+        });
+
 
         FloatingActionButton fab = findViewById(R.id.floatingbutton);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -48,9 +66,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         // Refresh data in the homeFragment when MainActivity is resumed
         homeFragment fragment = (homeFragment) getSupportFragmentManager().findFragmentById(R.id.frame_layout);
+        AutoCompleteTextView textView = fragment.getView().findViewById(R.id.autocomplete_country);
+        textView.setText("");
+        textView.clearFocus();
         if (fragment != null) {
             fragment.fetchData();
         }
@@ -68,7 +88,24 @@ public class MainActivity extends AppCompatActivity {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.bottom_sheet_layout);
-
+        TextView tvDeletePatient = dialog.findViewById(R.id.tvDeletePatient);
+        tvDeletePatient.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, deletePatientData.class);
+                startActivity(intent);
+                dialog.dismiss();
+            }
+        });
+        TextView tvMarkVisit = dialog.findViewById(R.id.tvMarkVisit);
+        tvMarkVisit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, markVisit.class);
+                startActivity(intent);
+                dialog.dismiss();
+            }
+        });
         TextView textView = dialog.findViewById(R.id.Addpatient);
         textView.setOnClickListener(new View.OnClickListener() {
             @Override

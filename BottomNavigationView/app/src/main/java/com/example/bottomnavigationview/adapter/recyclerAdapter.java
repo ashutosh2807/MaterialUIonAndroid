@@ -78,7 +78,6 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
         holder.Address.setText("Address: "+ currentItem.getAddress() );
         int size = currentItem.getVisit_dates().size();
         Timestamp LastVisit = currentItem.getLastVisit();
-//        Date Last_visit = ().get(size -1)).toDate();
         holder.Last_visit.setText("Last_visit: "+dateFormat.format(LastVisit.toDate())  );
 
     }

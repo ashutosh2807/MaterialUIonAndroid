@@ -131,17 +131,4 @@ public class profile {
     }
 
 
-    public Map getData(){
-        Map map = new HashMap();
-        map.put("OPD_ID",this.OPD_ID);
-        map.put("Name",this.Name);
-        map.put("FatherName",this.FatherName);
-        map.put("Gender",this.Gender);
-        map.put("Phone_number",this.Phone_number);
-        map.put("Address",this.Address);
-        map.put("Email",this.Email);
-        map.put("DOB",this.DateOfBirth);
-        map.put("Registration_time",this.Registration_Time);
-        return  map;
-    }
     }

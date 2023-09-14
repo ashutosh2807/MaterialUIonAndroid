@@ -21,20 +21,30 @@ public class HomeViewModel extends ViewModel {
         }
         for(profile p: profileList){
             if(p.getOPD_ID().equals(s)){ // Use .equals() for string comparison
-                profilelist1.add(p); // Add the matching profile to the result list
+                profilelist1.add(p); // Add the matching profileFragment to the result list
             }
         }
         return profilelist1;
     }
 
+
     public profile getProfileWithOPD(String OPD){
         for(profile pdata: profileList){
             if(pdata.getOPD_ID().equals(OPD)){ // Use .equals() for string comparison
-               return pdata; // Add the matching profile to the result list
+               return pdata; // Add the matching profileFragment to the result list
             }
         }
         return null;
     }
+    public profile getProfileWithNameOPD(String NameOPD){
+        for(profile pdata: profileList){
+            if((pdata.getName()+" : "+pdata.getOPD_ID()).equals(NameOPD)){ // Use .equals() for string comparison
+               return pdata; // Add the matching profileFragment to the result list
+            }
+        }
+        return null;
+    }
+
     public profile getProfile(int position){
         return  profileList.get(position);
     }
