@@ -45,8 +45,6 @@ public class AddPatient extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 savePatientData();
-                Intent resultIntent = new Intent();
-                setResult(RESULT_OK, resultIntent);
                 finish();
             }
         });

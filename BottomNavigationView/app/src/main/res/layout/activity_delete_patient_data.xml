@@ -11,6 +11,7 @@
     <LinearLayout
         android:orientation="horizontal"
         android:id="@+id/linear1"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -59,7 +60,10 @@
                     android:id="@+id/etOPD"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter OPD ID"></AutoCompleteTextView >
+                    android:hint="Enter OPD ID"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    ></AutoCompleteTextView >
             </LinearLayout>
 
             <TextView
@@ -78,13 +82,13 @@
                 android:orientation="horizontal"
                 android:layout_margin="5dp">
 
-
-
                 <AutoCompleteTextView
                     android:id="@+id/etName"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter Name ID : OPD ID">
+                    android:hint="Enter Name ID : OPD ID"
+                    android:layout_gravity="center"
+                    android:gravity="center">
 
                 </AutoCompleteTextView>
             </LinearLayout>

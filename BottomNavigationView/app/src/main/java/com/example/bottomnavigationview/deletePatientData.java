@@ -176,7 +176,6 @@ public class deletePatientData extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                db.deletePatientData(OPD_ID);
-                dialog.dismiss();
                 finish();
             }
         });

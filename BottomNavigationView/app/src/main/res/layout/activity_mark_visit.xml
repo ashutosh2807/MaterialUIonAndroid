@@ -59,6 +59,8 @@
                     android:id="@+id/etOPD"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
                     android:hint="Enter OPD ID"></AutoCompleteTextView >
             </LinearLayout>
 
@@ -84,6 +86,8 @@
                     android:id="@+id/etName"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
                     android:hint="Enter Name ID : OPD ID">
 
                 </AutoCompleteTextView>
@@ -114,6 +118,7 @@
                 android:id="@+id/cardline"
                 android:layout_width="match_parent"
                 android:layout_gravity="center"
+
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
