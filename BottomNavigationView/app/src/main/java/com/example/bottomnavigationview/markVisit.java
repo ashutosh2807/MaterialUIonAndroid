@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -23,11 +24,14 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.bottomnavigationview.adapter.recyclerAdapter;
+import com.example.bottomnavigationview.profileData.IServices;
 import com.example.bottomnavigationview.profileData.OnDocumentFetchListener;
 import com.example.bottomnavigationview.profileData.dbSingleton;
 import com.example.bottomnavigationview.profileData.profile;
@@ -38,19 +42,51 @@ import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 public class markVisit extends AppCompatActivity {
     private HomeViewModel viewModel;
     private dbSingleton db;
+    private  List<String> selection_list;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         db = dbSingleton.getInstance();
+
+        db.setServiceInterface(new IServices() {
+            @Override
+            public void onServiceFetched(Map<String, Object> data) {
+                List<Integer> price = new ArrayList<>();
+                Set<String> keys = data.keySet();
+                List<String> items = new ArrayList<>();
+
+                for (String key : keys) {
+                    items.add(key);
+                    price.add(Integer.valueOf(data.get(key).toString()));
+                }
+                RelativeLayout rlServices = findViewById(R.id.rlServices);
+                rlServices.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        showMultipleSelects(items,price);
+                    }
+                });
+            }
+            @Override
+            public void onServiceNotFetched() {
+                Toast.makeText(getApplicationContext(),"No data Found",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        db.getServices();
         viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         setContentView(R.layout.activity_mark_visit);
         Button btnDate = findViewById(R.id.btnDate);
@@ -68,6 +104,7 @@ public class markVisit extends AppCompatActivity {
             public void onClick(View v) {
                 TextView selectedDate = findViewById(R.id.selectedDate);
                 TextView txtOPD =  findViewById(R.id.tvOPD);
+                TextView amount = findViewById(R.id.etAmount);
                 if(selectedDate.getText().toString().equals("date")){
                     Toast.makeText(getBaseContext(), "Please select Date", Toast.LENGTH_SHORT).show();
                 }
@@ -75,7 +112,12 @@ public class markVisit extends AppCompatActivity {
                     Toast.makeText(getBaseContext(), "Please Select a Patient", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    boolean check =  db.markVisitDate(viewModel.getProfileWithOPD(txtOPD.getText().toString().trim()),selectedDate.getText().toString());
+                    Map<String,List<String>> data = new HashMap<>();
+                    data.put(selectedDate.getText().toString(),selection_list);
+
+                    boolean check =  db.markVisitDate(
+                            viewModel.getProfileWithOPD(txtOPD.getText().toString().trim())
+                            ,selectedDate.getText().toString(),data,amount.getText().toString());
                     if(check){
                         Toast.makeText(getBaseContext(), "Date Marked Successfully", Toast.LENGTH_SHORT).show();
                     }
@@ -87,6 +129,78 @@ public class markVisit extends AppCompatActivity {
         });
     }
 
+    private String ValidateEditTexts(EditText texts){
+        if(texts.getText().toString().trim() == ""){
+            return  "";
+        }
+        else {
+            return  texts.getText().toString().trim();
+        }
+    }
+    private  void showMultipleSelects(List<String> items,List<Integer>  price){
+        String[] listItems = items.toArray(new String[0]);
+        Integer[] prices = price.toArray(new Integer[0]);
+        selection_list = new ArrayList<>();
+
+        boolean[] checkedItems = new boolean[listItems.length];
+        List<String> selectedItems = Arrays.asList(listItems);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Choose Services");
+        builder.setIcon(R.drawable.arrowdown);
+
+        // now this is the function which sets the alert dialog for multiple item selection ready
+        builder.setMultiChoiceItems(listItems, checkedItems, (dialog, which, isChecked) -> {
+            checkedItems[which] = isChecked;
+            String currentItem = selectedItems.get(which);
+        });
+
+        // alert dialog shouldn't be cancellable
+        builder.setCancelable(false);
+
+        // handle the positive button of the dialog
+        builder.setPositiveButton("Done", (dialog, which) -> {
+            Integer TotalPrice = 0;
+            Map<String,List<String>> data = new HashMap<>();
+
+            String selected_items = "Select Services";
+            TextView tvSelectedservices = findViewById(R.id.tvSelectedservices);
+            EditText etAmount = findViewById(R.id.etAmount);
+            selected_items = "";
+            for (int i = 0; i < checkedItems.length; i++) {
+                if (checkedItems[i]) {
+                    selected_items += listItems[i]+", ";
+                    selection_list.add(listItems[i]);
+                    TotalPrice += prices[i];
+                }
+            }
+
+            if(selected_items.length() > 2){
+                tvSelectedservices.setText(selected_items.toUpperCase().substring(0,selected_items.length()-2));
+            }
+            else {
+                tvSelectedservices.setText("Select Services");
+            }
+
+            etAmount.setText(String.valueOf(TotalPrice));
+        });
+
+        // handle the negative button of the alert dialog
+        builder.setNegativeButton("CANCEL", (dialog, which) -> {});
+
+        // handle the neutral button of the dialog to clear the selected items boolean checkedItem
+        builder.setNeutralButton("CLEAR ALL", (dialog, which) -> {
+            Arrays.fill(checkedItems, false);
+        });
+
+        // create the builder
+        builder.create();
+
+        // create the alert dialog with the alert dialog builder instance
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+    }
     private void fetchData() {
         // Fetch new data from Firebase
         db.setDocumentFetchListener(new OnDocumentFetchListener() {
@@ -220,7 +334,7 @@ public class markVisit extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 TextView txtselected =  findViewById(R.id.selectedDate);
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                 txtselected.setText(dateFormat.format(new Date()));
                 dialog.dismiss();
             }
@@ -232,9 +346,9 @@ public class markVisit extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 TextView txtselected = findViewById(R.id.selectedDate);
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
                 String selectedDate = String.format(
-                        "%02d/%02d/%04d %02d:%02d:%02d",
+                        "%02d-%02d-%04d %02d:%02d:%02d",
                         dtp.getDayOfMonth(),
                         dtp.getMonth() + 1,
                         dtp.getYear(),

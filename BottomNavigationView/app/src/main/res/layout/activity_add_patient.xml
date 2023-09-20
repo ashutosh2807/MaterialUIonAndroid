@@ -222,6 +222,7 @@
 
                         <EditText
                             android:hint="Age"
+                            android:inputType="number"
                             android:id="@+id/etAge"
                             android:layout_width="match_parent"
                             android:importantForAutofill="no"

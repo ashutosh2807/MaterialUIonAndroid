@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import com.example.bottomnavigationview.fragments.homeFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -98,11 +100,13 @@ public class dbSingleton {
                 });
     }
 
-    public boolean markVisitDate(profile data,String DateVisited){
-        List<Timestamp> data_visited = data.getVisit_dates();
-        String dateString = DateVisited; // Replace with your date string
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
 
+    public boolean markVisitDate(profile data,String DateVisited,Map<String,List<String>> services,String amount){
+        List<Timestamp> data_visited = data.getVisit_dates();
+        String dateString = DateVisited;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
+        List<Map<String,List<String>>> services_get = data.getServices();
+        services_get.add(services);
         try {
             Date date = dateFormat.parse(dateString);
             data_visited.add(new Timestamp(date));
@@ -114,12 +118,11 @@ public class dbSingleton {
             profileData.put("Phone_number", data.getPhone_number());
             profileData.put("Address", data.getAddress());
             profileData.put("Age", Integer.valueOf(data.getAge()));
-            profileData.put("Services", data.getServices());
-            profileData.put("Amount",data.getAmount());
+            profileData.put("Services", services_get);
+            profileData.put("Amount",amount);
             profileData.put("Note",data.getNote());
             profileData.put("Registration_Time",  new Timestamp(new Date()));
             profileData.put("Visit_date", data_visited);
-
 
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             Map<String, Map<String, Object>> pdata = new HashMap<String, Map<String, Object>>();

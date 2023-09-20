@@ -167,29 +167,30 @@ public class AddPatient extends AppCompatActivity {
         EditText etAmount = findViewById(R.id.etAmount);
         EditText etNote = findViewById(R.id.etNote);
 
-        RadioGroup genderRadioGroup = findViewById(R.id.genderRadioGroup);
-        String selectedGender = "";
-        int selectedRadioButtonId = genderRadioGroup.getCheckedRadioButtonId();
-        try{
-            RadioButton selectedRadioButton = findViewById(selectedRadioButtonId);
-            selectedGender = selectedRadioButton.getText().toString();
-        }catch (Exception e){
-            selectedGender = "";
-        }
+            RadioGroup genderRadioGroup = findViewById(R.id.genderRadioGroup);
+            String selectedGender = "";
+            int selectedRadioButtonId = genderRadioGroup.getCheckedRadioButtonId();
+            try{
+                RadioButton selectedRadioButton = findViewById(selectedRadioButtonId);
+                selectedGender = selectedRadioButton.getText().toString();
+            }catch (Exception e){
+                selectedGender = "";
+            }
+
+            dbSingleton.getInstance().saveToFirestore(
+                    ValidateEditTexts(Name),
+                    ValidateEditTexts(FName),
+                    ValidateEditTexts(OPD_ID),
+                    ValidateEditTexts(Phone),
+                    selectedGender,
+                    ValidateEditTexts(Age),
+                    selected_services,
+                    ValidateEditTexts(etAmount),
+                    ValidateEditTexts(etNote),
+                    ValidateEditTexts(Address)
+            );
 
 
-        dbSingleton.getInstance().saveToFirestore(
-                ValidateEditTexts(Name),
-                ValidateEditTexts(FName),
-                ValidateEditTexts(OPD_ID),
-                ValidateEditTexts(Phone),
-                selectedGender,
-                ValidateEditTexts(Age),
-                selected_services,
-                ValidateEditTexts(etAmount),
-                ValidateEditTexts(etNote),
-                ValidateEditTexts(Address)
-                );
     }
 
     private String ValidateEditTexts(EditText texts){

@@ -124,6 +124,22 @@ public class homeFragment extends Fragment {
         TextView tvTotalVisits = dialog.findViewById(R.id.tvTotalVisits);
         tvTotalVisits.setText(String.valueOf(data.getVisit_dates().size()));
 
+        TextView tvservices = dialog.findViewById(R.id.tvservices);
+
+        String a = "";
+       try{
+           Map<String,List<String>> service = data.getServices().get(data.getServices().size()-1);
+           for(Object obj : service.values()){
+               a+= obj.toString();
+           }
+       }
+       catch (Exception e){
+           a = "[ ]";
+       }
+
+        tvservices.setText(a.toUpperCase());
+
+
         LinearLayout layout = dialog.findViewById(R.id.LinearBase);
         layout.setOnClickListener(new View.OnClickListener() {
             @Override

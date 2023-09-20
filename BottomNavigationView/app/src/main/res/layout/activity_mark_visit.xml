@@ -114,6 +114,7 @@
             android:layout_gravity="center"
             android:foregroundGravity="center">
 
+
             <LinearLayout
                 android:id="@+id/cardline"
                 android:layout_width="match_parent"
@@ -122,6 +123,80 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="81dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="Services : "
+                        android:textSize="18dp"
+                        android:textStyle="bold" />
+
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="#FFA500"
+                        app:cardCornerRadius="5dp"
+                        app:cardElevation="10dp"
+                        >
+
+                        <RelativeLayout
+                            android:id="@+id/rlServices"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:id="@+id/tvSelectedservices"
+                                android:hint="Select Services">
+
+                            </TextView>
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/arrowdown"
+                                android:layout_centerInParent="true"
+                                android:layout_alignParentEnd="true">
+
+                            </ImageView>
+                        </RelativeLayout>
+                    </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    android:gravity="center">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="Amount : "
+                        android:textStyle="bold"
+                        android:textSize="18dp" />
+
+                    <EditText
+                        android:hint="0"
+                        android:id="@+id/etAmount"
+                        android:layout_width="match_parent"
+                        android:importantForAutofill="no"
+                        android:layout_height="wrap_content"
+                        />
+                </LinearLayout>
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -133,7 +208,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Name: "></TextView>
+                        android:text="Name*: "></TextView>
 
                     <TextView
                         android:id="@+id/tvName"
@@ -154,7 +229,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="OPD ID: "></TextView>
+                        android:text="OPD ID*: "></TextView>
 
                     <TextView
                         android:id="@+id/tvOPD"
@@ -174,7 +249,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Phone Number: "></TextView>
+                        android:text="Phone Number*: "></TextView>
 
                     <TextView
                         android:id="@+id/tvPhone"
@@ -194,7 +269,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Father Name: "></TextView>
+                        android:text="Father Name*: "></TextView>
 
                     <TextView
                         android:id="@+id/tvFatherName"
