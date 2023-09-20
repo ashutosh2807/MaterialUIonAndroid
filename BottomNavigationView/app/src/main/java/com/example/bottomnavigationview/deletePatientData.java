@@ -49,6 +49,7 @@ public class deletePatientData extends AppCompatActivity {
         db = dbSingleton.getInstance();
         viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         setContentView(R.layout.activity_delete_patient_data);
+
         fetchData();
         TextView tvOPD = findViewById(R.id.tvOPD);
         Button btnDeletePatient = findViewById(R.id.btnDeletePatient);

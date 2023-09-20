@@ -6,9 +6,20 @@ import com.example.bottomnavigationview.profileData.profile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class HomeViewModel extends ViewModel {
     private List<profile> profileList = new ArrayList<>();
+
+    private List<Map<String,Integer>> services = new ArrayList<>();
+
+    public List<Map<String, Integer>> getServices() {
+        return services;
+    }
+
+    public void setServices(List<Map<String, Integer>> services) {
+        this.services = services;
+    }
 
     public List<profile> getProfileList() {
         return profileList;

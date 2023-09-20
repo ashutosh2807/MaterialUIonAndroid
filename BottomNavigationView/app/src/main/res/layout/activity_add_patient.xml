@@ -75,7 +75,7 @@
                         <EditText
                             android:id="@+id/etName"
                             android:importantForAutofill="no"
-                            android:layout_width="200dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             />
                     </LinearLayout>
@@ -97,7 +97,7 @@
 
                         <EditText
                             android:id="@+id/etFname"
-                            android:layout_width="200dp"
+                            android:layout_width="match_parent"
                             android:importantForAutofill="no"
                             android:layout_height="wrap_content"
                             />
@@ -120,7 +120,7 @@
 
                         <EditText
                             android:id="@+id/etOPD"
-                            android:layout_width="200dp"
+                            android:layout_width="match_parent"
                             android:importantForAutofill="no"
                             android:layout_height="wrap_content"
                             />
@@ -188,7 +188,7 @@
 
                         <EditText
                             android:id="@+id/etPhone"
-                            android:layout_width="160dp"
+                            android:layout_width="match_parent"
                             android:inputType="number"
                             android:importantForAutofill="no"
                             android:layout_height="wrap_content"
@@ -212,8 +212,8 @@
 
                         <EditText
                             android:id="@+id/etmail"
-                            android:layout_width="200dp"
-                            android:layout_height="56dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:inputType="textEmailAddress"
                             android:importantForAutofill="no" />
                     </LinearLayout>
@@ -235,9 +235,8 @@
 
                         <EditText
                             android:id="@+id/etAddress"
-                            android:layout_width="200dp"
+                            android:layout_width="match_parent"
                             android:importantForAutofill="no"
-
                             android:layout_height="wrap_content"
                             />
                     </LinearLayout>
@@ -271,6 +270,76 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             ></TextView>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="center"
+                        android:layout_margin="5dp"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="81dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="Services : "
+                            android:textSize="18dp"
+                            android:textStyle="bold" />
+
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:cardBackgroundColor="#FFA500"
+                            app:cardCornerRadius="5dp"
+                            app:cardElevation="10dp"
+                            >
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerInParent="true"
+                                    android:hint="Select Services">
+
+                                </TextView>
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/arrowdown"
+                                    android:layout_centerInParent="true"
+                                    android:layout_alignParentEnd="true">
+
+                                </ImageView>
+                            </RelativeLayout>
+                        </com.google.android.material.card.MaterialCardView>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="center"
+                        android:layout_margin="5dp"
+                        android:gravity="center">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="Note : "
+                            android:textStyle="bold"
+                            android:textSize="18dp" />
+
+                        <EditText
+                            android:id="@+id/etNote"
+                            android:layout_width="match_parent"
+                            android:importantForAutofill="no"
+                            android:layout_height="wrap_content"
+                            />
                     </LinearLayout>
                 </LinearLayout>
 

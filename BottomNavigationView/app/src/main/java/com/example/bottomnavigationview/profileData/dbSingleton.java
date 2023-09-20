@@ -26,6 +26,12 @@ import java.util.Map;
 public class dbSingleton {
     private OnDocumentFetchListener documentFetchListener;
 
+
+    private IServices serviceInterface;
+    public void setServiceInterface(IServices serviceInterface) {
+        this.serviceInterface = serviceInterface;
+    }
+
     // Setter for the document fetch listener
     public void setDocumentFetchListener(OnDocumentFetchListener listener) {
         this.documentFetchListener = listener;
@@ -45,6 +51,31 @@ public class dbSingleton {
             }
         }
         return instance;
+    }
+
+    public  void getServices(){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference userDetailsRef = db.collection("ServicesWithPrice");
+        DocumentReference doc = db.collection("ServicesWithPrice").document("DentalServices");
+        // Retrieve documents from the collection
+        doc.get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        Map<String, Object> data = documentSnapshot.getData();
+
+                        if (serviceInterface != null) {
+                            serviceInterface.onServiceFetched(data);
+                        }
+                    } else {
+                        if (serviceInterface != null) {
+                            serviceInterface.onServiceNotFetched();
+                        }
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    // Handle the failure here
+                    Log.e("TAG", "Error getting document: ", e);
+                });
     }
 
     public void deletePatientData(String OPDID){

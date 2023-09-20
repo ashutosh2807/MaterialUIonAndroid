@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,16 +18,21 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.bottomnavigationview.profileData.IServices;
 import com.example.bottomnavigationview.profileData.dbSingleton;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
+import java.util.Set;
 
 public class AddPatient extends AppCompatActivity {
 
+    private boolean dataFetched = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +54,25 @@ public class AddPatient extends AppCompatActivity {
                 finish();
             }
         });
+
+        dbSingleton db = dbSingleton.getInstance();
+        db.setServiceInterface(new IServices() {
+            @Override
+            public void onServiceFetched(Map<String, Object> data) {
+                Set<String> keys = data.keySet();
+
+                for (String key : keys) {
+                    Log.d("TAG", key);
+                }
+            }
+            @Override
+            public void onServiceNotFetched() {
+                Toast.makeText(getApplicationContext(),"No data Found",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        db.getServices();
+
     }
 
     public void showDialog() {

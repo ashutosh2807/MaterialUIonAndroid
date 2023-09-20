@@ -5,4 +5,5 @@ import java.util.Map;
 
 public interface OnDocumentFetchListener {
     void onDocumentsFetched(List<Map<String, Object>> documentList);
+
 }
