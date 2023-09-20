@@ -60,21 +60,7 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
         holder.Mobile.setText("Mobile: "+currentItem.getPhone_number().toString().toUpperCase());
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
-        Calendar birthdateCalendar = Calendar.getInstance();
-        birthdateCalendar.setTime(currentItem.getDateOfBirth());
-
-        Calendar currentCalendar = Calendar.getInstance();
-        currentCalendar.setTime(new Date());
-
-        // Calculate the age
-        int age = currentCalendar.get(Calendar.YEAR) - birthdateCalendar.get(Calendar.YEAR);
-
-        // Check if the birthdate has occurred this year
-        if (currentCalendar.get(Calendar.DAY_OF_YEAR) < birthdateCalendar.get(Calendar.DAY_OF_YEAR)) {
-            age--;
-        }
-
-        holder.Age.setText("Age: "+ String.valueOf(age));
+        holder.Age.setText("Age: "+ currentItem.getAge());
         holder.Address.setText("Address: "+ currentItem.getAddress() );
         int size = currentItem.getVisit_dates().size();
         Timestamp LastVisit = currentItem.getLastVisit();

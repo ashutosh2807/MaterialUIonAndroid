@@ -164,8 +164,10 @@ public class homeFragment extends Fragment {
                             doc.get("Gender").toString(),
                             doc.get("Phone_number").toString(),
                             doc.get("Address").toString(),
-                            doc.get("Email").toString(),
-                            ((Timestamp) doc.get("Dob")).toDate(),
+                            doc.get("Age").toString(),
+                            (List<Map<String,List<String>>>) doc.get("Services"),
+                            doc.get("Amount").toString(),
+                            doc.get("Note").toString(),
                             ( List<Timestamp> ) doc.get("Visit_date")
                     );
                     newData.add(data);

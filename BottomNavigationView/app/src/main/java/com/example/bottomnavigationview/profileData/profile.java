@@ -27,8 +27,44 @@ public class profile {
     private String Gender;
     private String Phone_number;
     private String Address;
-    private String Email;
-    private Date DateOfBirth;
+    private String Age;
+
+    public String getAge() {
+        return Age;
+    }
+
+    public void setAge(String age) {
+        Age = age;
+    }
+
+    private List<Map<String,List<String>>> services;
+
+    public List<Map<String,List<String>>> getServices() {
+        return services;
+    }
+
+    public void setServices(List<Map<String,List<String>>> services) {
+        this.services = services;
+    }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    private  String amount;
+    private  String note;
     private Date Registration_Time;
 
     private  List<Timestamp> visit_dates;
@@ -92,22 +128,6 @@ public class profile {
         Address = address;
     }
 
-    public String getEmail() {
-        return Email;
-    }
-
-    public void setEmail(String email) {
-        Email = email;
-    }
-
-    public Date getDateOfBirth() {
-        return DateOfBirth;
-    }
-
-    public void setDateOfBirth(Date dateOfBirth) {
-        DateOfBirth = dateOfBirth;
-    }
-
     public Date getRegistration_Time() {
         return Registration_Time;
     }
@@ -117,15 +137,17 @@ public class profile {
     }
 
     public profile(String OPD_ID, String Name, String FatherName, String Gender,
-                   String Phone_number, String Address, String Email, Date Dob, List<Timestamp>  Visit_dates) {
+                   String Phone_number, String Address, String Age, List<Map<String,List<String>>> Services,String amount, String note, List<Timestamp>  Visit_dates) {
         this.OPD_ID = OPD_ID;
         this.Name = Name;
         this.FatherName = FatherName;
         this.Gender = Gender;
         this.Phone_number = Phone_number;
         this.Address = Address;
-        this.Email = Email;
-        this.DateOfBirth = Dob;
+        this.Age = Age;
+        this.services = Services;
+        this.amount = amount;
+        this.note = note;
         this.Registration_Time = new Date();
         this.visit_dates = Visit_dates;
     }
