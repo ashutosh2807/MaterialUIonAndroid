@@ -113,9 +113,11 @@ public class dbSingleton {
             profileData.put("Gender", data.getGender());
             profileData.put("Phone_number", data.getPhone_number());
             profileData.put("Address", data.getAddress());
-            profileData.put("Email", data.getEmail());
-            profileData.put("Dob", new Timestamp(data.getDateOfBirth()));
-            profileData.put("Time",  new Timestamp(new Date()));
+            profileData.put("Age", Integer.valueOf(data.getAge()));
+            profileData.put("Services", data.getServices());
+            profileData.put("Amount",data.getAmount());
+            profileData.put("Note",data.getNote());
+            profileData.put("Registration_Time",  new Timestamp(new Date()));
             profileData.put("Visit_date", data_visited);
 
 
@@ -148,7 +150,8 @@ public class dbSingleton {
 
     public void saveToFirestore(String Name,String FatherName, String OPD_ID, String Phone_number,
                                 String Gender,
-                                String Email, String Address, Date Dob) {
+                                String Age,List<Map<String,List<String>>> services,
+                                String amount,String note, String Address) {
         List<Timestamp> data_visited = new ArrayList<>();
         data_visited.add(new Timestamp(new Date()));
 
@@ -159,8 +162,10 @@ public class dbSingleton {
         profileData.put("Gender", Gender);
         profileData.put("Phone_number", Phone_number);
         profileData.put("Address", Address);
-        profileData.put("Email", Email);
-        profileData.put("Dob", new Timestamp(Dob));
+        profileData.put("Age", Integer.valueOf(Age));
+        profileData.put("Services", services);
+        profileData.put("Amount",amount);
+        profileData.put("Note",note);
         profileData.put("Time",  new Timestamp(new Date()));
         profileData.put("Visit_date", data_visited);
 

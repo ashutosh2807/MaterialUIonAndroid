@@ -2,8 +2,10 @@ package com.example.bottomnavigationview;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.BlendMode;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -17,34 +19,36 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bottomnavigationview.profileData.IServices;
 import com.example.bottomnavigationview.profileData.dbSingleton;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.Timestamp;
+
+import org.w3c.dom.Text;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public class AddPatient extends AppCompatActivity {
-
+    private  List<Map<String,List<String>>> selected_services;
     private boolean dataFetched = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_patient);
 
-        Button btn = findViewById(R.id.btnDob);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDialog();
-            }
-        });
+        RelativeLayout rlServices = findViewById(R.id.rlServices);
 
         Button btnAdd = findViewById(R.id.btnAdd);
         btnAdd.setOnClickListener(new View.OnClickListener() {
@@ -59,11 +63,21 @@ public class AddPatient extends AppCompatActivity {
         db.setServiceInterface(new IServices() {
             @Override
             public void onServiceFetched(Map<String, Object> data) {
-                Set<String> keys = data.keySet();
+                List<Integer> price = new ArrayList<>();
+                 Set<String> keys = data.keySet();
+                List<String> items = new ArrayList<>();
 
                 for (String key : keys) {
-                    Log.d("TAG", key);
+                    items.add(key);
+                    price.add(Integer.valueOf(data.get(key).toString()));
                 }
+
+                rlServices.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                         showMultipleSelects(items,price);
+                    }
+                });
             }
             @Override
             public void onServiceNotFetched() {
@@ -75,27 +89,72 @@ public class AddPatient extends AppCompatActivity {
 
     }
 
-    public void showDialog() {
-        final Dialog dialog = new Dialog(this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.datepicker);
-        DatePicker dtp = dialog.findViewById(R.id.date);
-        dtp.setMaxDate(new Date().getTime());
-        Button btnselect = dialog.findViewById(R.id.btnselect);
+    private  void showMultipleSelects(List<String> items,List<Integer>  price){
+        String[] listItems = items.toArray(new String[0]);
+        Integer[] prices = price.toArray(new Integer[0]);
+        selected_services = new ArrayList<>();
+        List<String>selection_list = new ArrayList<>();
 
-        btnselect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                TextView txt = findViewById(R.id.etDob);
-                txt.setText(String.valueOf(dtp.getDayOfMonth()) + "/" + String.valueOf(dtp.getMonth() + 1) + "/" + String.valueOf(dtp.getYear()));
-                dialog.dismiss();
-            }
+        boolean[] checkedItems = new boolean[listItems.length];
+        List<String> selectedItems = Arrays.asList(listItems);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Choose Services");
+        builder.setIcon(R.drawable.arrowdown);
+
+        // now this is the function which sets the alert dialog for multiple item selection ready
+        builder.setMultiChoiceItems(listItems, checkedItems, (dialog, which, isChecked) -> {
+            checkedItems[which] = isChecked;
+            String currentItem = selectedItems.get(which);
         });
-        dialog.show();
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.getWindow().getAttributes().windowAnimations = R.style.PopAnimation;
-        dialog.getWindow().setGravity(Gravity.CENTER);
+
+        // alert dialog shouldn't be cancellable
+        builder.setCancelable(false);
+
+        // handle the positive button of the dialog
+        builder.setPositiveButton("Done", (dialog, which) -> {
+            Integer TotalPrice = 0;
+            Map<String,List<String>> data = new HashMap<>();
+
+            String selected_items = "Select Services";
+            TextView tvSelectedservices = findViewById(R.id.tvSelectedservices);
+            EditText etAmount = findViewById(R.id.etAmount);
+            selected_items = "";
+            for (int i = 0; i < checkedItems.length; i++) {
+                if (checkedItems[i]) {
+                    selected_items += listItems[i]+", ";
+                    selection_list.add(listItems[i]);
+                    TotalPrice += prices[i];
+                }
+            }
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+            data.put(dateFormat.format(new Date()),selection_list);
+            selected_services.add(data);
+            if(selected_items.length() > 2){
+                tvSelectedservices.setText(selected_items.toUpperCase().substring(0,selected_items.length()-2));
+            }
+            else {
+                tvSelectedservices.setText("Select Services");
+            }
+
+            etAmount.setText(String.valueOf(TotalPrice));
+        });
+
+        // handle the negative button of the alert dialog
+        builder.setNegativeButton("CANCEL", (dialog, which) -> {});
+
+        // handle the neutral button of the dialog to clear the selected items boolean checkedItem
+        builder.setNeutralButton("CLEAR ALL", (dialog, which) -> {
+            Arrays.fill(checkedItems, false);
+        });
+
+        // create the builder
+        builder.create();
+
+        // create the alert dialog with the alert dialog builder instance
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
     }
 
     private void savePatientData() {
@@ -103,30 +162,43 @@ public class AddPatient extends AppCompatActivity {
         EditText FName = findViewById(R.id.etFname);
         EditText OPD_ID = findViewById(R.id.etOPD);
         EditText Phone = findViewById(R.id.etPhone);
-        EditText Email = findViewById(R.id.etmail);
+        EditText Age = findViewById(R.id.etAge);
         EditText Address = findViewById(R.id.etAddress);
-        TextView Dob = findViewById(R.id.etDob);
+        EditText etAmount = findViewById(R.id.etAmount);
+        EditText etNote = findViewById(R.id.etNote);
+
         RadioGroup genderRadioGroup = findViewById(R.id.genderRadioGroup);
-
+        String selectedGender = "";
         int selectedRadioButtonId = genderRadioGroup.getCheckedRadioButtonId();
-        RadioButton selectedRadioButton = findViewById(selectedRadioButtonId);
-        String selectedGender = selectedRadioButton.getText().toString();
+        try{
+            RadioButton selectedRadioButton = findViewById(selectedRadioButtonId);
+            selectedGender = selectedRadioButton.getText().toString();
+        }catch (Exception e){
+            selectedGender = "";
+        }
 
-        dbSingleton.getInstance().saveToFirestore(Name.getText().toString(),FName.getText().toString(),
-                OPD_ID.getText().toString(),Phone.getText().toString(),selectedGender,Email.getText().toString(),Address.getText().toString(),
-                DateConversion(Dob.getText().toString())
-        );
+
+        dbSingleton.getInstance().saveToFirestore(
+                ValidateEditTexts(Name),
+                ValidateEditTexts(FName),
+                ValidateEditTexts(OPD_ID),
+                ValidateEditTexts(Phone),
+                selectedGender,
+                ValidateEditTexts(Age),
+                selected_services,
+                ValidateEditTexts(etAmount),
+                ValidateEditTexts(etNote),
+                ValidateEditTexts(Address)
+                );
     }
 
-    private Date DateConversion(String s) {
-        String dateString = s;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/M/yyyy");
-        try {
-            Date date = dateFormat.parse(dateString);
-            return date;
-        } catch (ParseException e) {
-            e.printStackTrace();
-           return  null;
+    private String ValidateEditTexts(EditText texts){
+        if(texts.getText().toString().trim() == ""){
+            return  "";
+        }
+        else {
+            return  texts.getText().toString().trim();
         }
     }
+
 }
