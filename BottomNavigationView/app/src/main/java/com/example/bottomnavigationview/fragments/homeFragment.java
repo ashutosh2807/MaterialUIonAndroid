@@ -33,6 +33,7 @@ import com.example.bottomnavigationview.profileData.profile;
 import com.example.bottomnavigationview.viewModels.HomeViewModel;
 import com.google.firebase.Timestamp;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -133,14 +134,19 @@ public class homeFragment extends Fragment {
         String a = "";
        try{
            Map<String,List<String>> services = data.getServices();
-           for(Object obj : services.values()){
-               a = obj.toString();
-           }
+           Timestamp t = data.getLastVisit();
+           SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:00");
+
+            a = data.getServices().get(dateFormat.format(t.toDate())).toString();
+
            tvAge.setText(data.getAge());
            tvNote.setText(data.getNote());
        }
        catch (Exception e){
            a = "[ ]";
+
+           tvAge.setText(data.getAge());
+           tvNote.setText(data.getNote());
        }
 
         tvservices.setText(a.toUpperCase());

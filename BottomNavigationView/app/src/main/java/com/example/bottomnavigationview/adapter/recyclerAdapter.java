@@ -58,7 +58,7 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
         holder.Gender.setText("Gender: "+currentItem.getGender().toString().toUpperCase());
 
         holder.Mobile.setText("Mobile: "+currentItem.getPhone_number().toString().toUpperCase());
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:00");
 
         holder.Age.setText("Age: "+ currentItem.getAge());
         holder.Address.setText("Address: "+ currentItem.getAddress() );

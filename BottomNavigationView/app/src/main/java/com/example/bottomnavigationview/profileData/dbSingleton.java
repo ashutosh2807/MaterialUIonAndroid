@@ -101,16 +101,24 @@ public class dbSingleton {
     }
 
 
-    public boolean markVisitDate(profile data,String DateVisited,Map<String,List<String>> services,String amount,String Note){
+    public boolean markVisitDate(profile data,String DateVisited
+            ,Map<String,List<String>> services,String amount,String Note){
         List<Timestamp> data_visited = data.getVisit_dates();
         String dateString = DateVisited;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:00", Locale.getDefault());
         Map<String,List<String>> services_get = services;
         for(String keys : data.getServices().keySet()){
                 services_get.put(keys,data.getServices().get(keys));
         }
 
+        if(amount.trim() == ""){
+            amount = "0";
+        }
+        if(Note.trim() == ""){
+            Note = "-";
+        }
         try {
+
             Date date = dateFormat.parse(dateString);
             data_visited.add(new Timestamp(date));
             Map<String,Object> profileData = new HashMap<>();
@@ -160,6 +168,13 @@ public class dbSingleton {
                                 String amount,String note, String Address) {
         List<Timestamp> data_visited = new ArrayList<>();
         data_visited.add(new Timestamp(new Date()));
+
+        if(amount.trim() == ""){
+            amount = "0";
+        }
+        if(note.trim() == ""){
+            note = "-";
+        }
 
         Map<String,Object> profileData = new HashMap<>();
         profileData.put("OPD_ID", OPD_ID);

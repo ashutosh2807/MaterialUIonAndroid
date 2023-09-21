@@ -127,7 +127,7 @@ public class AddPatient extends AppCompatActivity {
                     TotalPrice += prices[i];
                 }
             }
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:00");
             data.put(dateFormat.format(new Date()),selection_list);
             selected_services= data;
             if(selected_items.length() > 2){

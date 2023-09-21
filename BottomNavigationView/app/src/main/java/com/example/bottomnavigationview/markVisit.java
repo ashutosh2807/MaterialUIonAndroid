@@ -129,7 +129,7 @@ public class markVisit extends AppCompatActivity {
                     catch (Exception e){
                         boolean check =  db.markVisitDate(
                                 viewModel.getProfileWithOPD(txtOPD.getText().toString().trim())
-                                ,selectedDate.getText().toString(),data, amount.getText().toString(),"");
+                                ,selectedDate.getText().toString(),data, amount.getText().toString(),"-");
                         if(check){
                             Toast.makeText(getBaseContext(), "Date Marked Successfully", Toast.LENGTH_SHORT).show();
                         }
@@ -355,7 +355,7 @@ public class markVisit extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 TextView txtselected =  findViewById(R.id.selectedDate);
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:00");
                 txtselected.setText(dateFormat.format(new Date()));
                 dialog.dismiss();
             }
