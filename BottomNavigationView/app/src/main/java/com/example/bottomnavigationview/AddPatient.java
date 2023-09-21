@@ -41,7 +41,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class AddPatient extends AppCompatActivity {
-    private  List<Map<String,List<String>>> selected_services;
+    private  Map<String,List<String>>  selected_services;
     private boolean dataFetched = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +92,7 @@ public class AddPatient extends AppCompatActivity {
     private  void showMultipleSelects(List<String> items,List<Integer>  price){
         String[] listItems = items.toArray(new String[0]);
         Integer[] prices = price.toArray(new Integer[0]);
-        selected_services = new ArrayList<>();
+        selected_services = new HashMap<>();
         List<String>selection_list = new ArrayList<>();
 
         boolean[] checkedItems = new boolean[listItems.length];
@@ -129,7 +129,7 @@ public class AddPatient extends AppCompatActivity {
             }
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
             data.put(dateFormat.format(new Date()),selection_list);
-            selected_services.add(data);
+            selected_services= data;
             if(selected_items.length() > 2){
                 tvSelectedservices.setText(selected_items.toUpperCase().substring(0,selected_items.length()-2));
             }

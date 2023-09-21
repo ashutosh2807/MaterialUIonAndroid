@@ -104,7 +104,8 @@ public class markVisit extends AppCompatActivity {
             public void onClick(View v) {
                 TextView selectedDate = findViewById(R.id.selectedDate);
                 TextView txtOPD =  findViewById(R.id.tvOPD);
-                TextView amount = findViewById(R.id.etAmount);
+                EditText amount = findViewById(R.id.etAmount);
+                EditText etNote = findViewById(R.id.etNote);
                 if(selectedDate.getText().toString().equals("date")){
                     Toast.makeText(getBaseContext(), "Please select Date", Toast.LENGTH_SHORT).show();
                 }
@@ -114,28 +115,48 @@ public class markVisit extends AppCompatActivity {
                 else{
                     Map<String,List<String>> data = new HashMap<>();
                     data.put(selectedDate.getText().toString(),selection_list);
+                    try{
+                        boolean check =  db.markVisitDate(
+                                viewModel.getProfileWithOPD(txtOPD.getText().toString().trim())
+                                ,selectedDate.getText().toString(),data,ValidateEditTexts(amount),ValidateEditTexts(etNote));
+                        if(check){
+                            Toast.makeText(getBaseContext(), "Date Marked Successfully", Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            Toast.makeText(getBaseContext(), "Got an error.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    catch (Exception e){
+                        boolean check =  db.markVisitDate(
+                                viewModel.getProfileWithOPD(txtOPD.getText().toString().trim())
+                                ,selectedDate.getText().toString(),data, amount.getText().toString(),"");
+                        if(check){
+                            Toast.makeText(getBaseContext(), "Date Marked Successfully", Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            Toast.makeText(getBaseContext(), "Got an error.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
 
-                    boolean check =  db.markVisitDate(
-                            viewModel.getProfileWithOPD(txtOPD.getText().toString().trim())
-                            ,selectedDate.getText().toString(),data,amount.getText().toString());
-                    if(check){
-                        Toast.makeText(getBaseContext(), "Date Marked Successfully", Toast.LENGTH_SHORT).show();
-                    }
-                    else{
-                        Toast.makeText(getBaseContext(), "Got an error.", Toast.LENGTH_SHORT).show();
-                    }
                 }
             }
         });
     }
 
     private String ValidateEditTexts(EditText texts){
-        if(texts.getText().toString().trim() == ""){
+
+        try{
+            if(texts.getText().toString().trim() == ""){
+                return  "";
+            }
+            else {
+                return  texts.getText().toString().trim();
+            }
+        }
+        catch (Exception e){
             return  "";
         }
-        else {
-            return  texts.getText().toString().trim();
-        }
+
     }
     private  void showMultipleSelects(List<String> items,List<Integer>  price){
         String[] listItems = items.toArray(new String[0]);
@@ -218,7 +239,7 @@ public class markVisit extends AppCompatActivity {
                             doc.get("Phone_number").toString(),
                             doc.get("Address").toString(),
                             doc.get("Age").toString(),
-                            (List<Map<String,List<String>>>) doc.get("Services"),
+                            (Map<String,List<String>> ) doc.get("Services"),
                             doc.get("Amount").toString(),
                             doc.get("Note").toString(),
                             ( List<Timestamp> ) doc.get("Visit_date")

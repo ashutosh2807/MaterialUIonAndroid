@@ -37,13 +37,13 @@ public class profile {
         Age = age;
     }
 
-    private List<Map<String,List<String>>> services;
+    private Map<String,List<String>> services;
 
-    public List<Map<String,List<String>>> getServices() {
+    public Map<String,List<String>> getServices() {
         return services;
     }
 
-    public void setServices(List<Map<String,List<String>>> services) {
+    public void setServices(Map<String,List<String>> services) {
         this.services = services;
     }
 
@@ -137,7 +137,7 @@ public class profile {
     }
 
     public profile(String OPD_ID, String Name, String FatherName, String Gender,
-                   String Phone_number, String Address, String Age, List<Map<String,List<String>>> Services,String amount, String note, List<Timestamp>  Visit_dates) {
+                   String Phone_number, String Address, String Age, Map<String,List<String>> Services,String amount, String note, List<Timestamp>  Visit_dates) {
         this.OPD_ID = OPD_ID;
         this.Name = Name;
         this.FatherName = FatherName;

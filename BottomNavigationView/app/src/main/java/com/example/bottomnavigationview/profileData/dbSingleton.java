@@ -101,12 +101,15 @@ public class dbSingleton {
     }
 
 
-    public boolean markVisitDate(profile data,String DateVisited,Map<String,List<String>> services,String amount){
+    public boolean markVisitDate(profile data,String DateVisited,Map<String,List<String>> services,String amount,String Note){
         List<Timestamp> data_visited = data.getVisit_dates();
         String dateString = DateVisited;
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
-        List<Map<String,List<String>>> services_get = data.getServices();
-        services_get.add(services);
+        Map<String,List<String>> services_get = services;
+        for(String keys : data.getServices().keySet()){
+                services_get.put(keys,data.getServices().get(keys));
+        }
+
         try {
             Date date = dateFormat.parse(dateString);
             data_visited.add(new Timestamp(date));
@@ -117,10 +120,10 @@ public class dbSingleton {
             profileData.put("Gender", data.getGender());
             profileData.put("Phone_number", data.getPhone_number());
             profileData.put("Address", data.getAddress());
-            profileData.put("Age", Integer.valueOf(data.getAge()));
+            profileData.put("Age", data.getAge());
             profileData.put("Services", services_get);
             profileData.put("Amount",amount);
-            profileData.put("Note",data.getNote());
+            profileData.put("Note",Note);
             profileData.put("Registration_Time",  new Timestamp(new Date()));
             profileData.put("Visit_date", data_visited);
 
@@ -153,7 +156,7 @@ public class dbSingleton {
 
     public void saveToFirestore(String Name,String FatherName, String OPD_ID, String Phone_number,
                                 String Gender,
-                                String Age,List<Map<String,List<String>>> services,
+                                String Age,Map<String,List<String>>  services,
                                 String amount,String note, String Address) {
         List<Timestamp> data_visited = new ArrayList<>();
         data_visited.add(new Timestamp(new Date()));
@@ -165,7 +168,7 @@ public class dbSingleton {
         profileData.put("Gender", Gender);
         profileData.put("Phone_number", Phone_number);
         profileData.put("Address", Address);
-        profileData.put("Age", Integer.valueOf(Age));
+        profileData.put("Age", Age);
         profileData.put("Services", services);
         profileData.put("Amount",amount);
         profileData.put("Note",note);

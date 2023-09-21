@@ -125,13 +125,19 @@ public class homeFragment extends Fragment {
         tvTotalVisits.setText(String.valueOf(data.getVisit_dates().size()));
 
         TextView tvservices = dialog.findViewById(R.id.tvservices);
+        TextView tvAmount = dialog.findViewById(R.id.tvAmount);
+        tvAmount.setText(data.getAmount());
+        TextView tvAge = dialog.findViewById(R.id.tvAge);
+        TextView tvNote = dialog.findViewById(R.id.tvNote);
 
         String a = "";
        try{
-           Map<String,List<String>> service = data.getServices().get(data.getServices().size()-1);
-           for(Object obj : service.values()){
-               a+= obj.toString();
+           Map<String,List<String>> services = data.getServices();
+           for(Object obj : services.values()){
+               a = obj.toString();
            }
+           tvAge.setText(data.getAge());
+           tvNote.setText(data.getNote());
        }
        catch (Exception e){
            a = "[ ]";
@@ -181,7 +187,7 @@ public class homeFragment extends Fragment {
                             doc.get("Phone_number").toString(),
                             doc.get("Address").toString(),
                             doc.get("Age").toString(),
-                            (List<Map<String,List<String>>>) doc.get("Services"),
+                            (Map<String,List<String>>) doc.get("Services"),
                             doc.get("Amount").toString(),
                             doc.get("Note").toString(),
                             ( List<Timestamp> ) doc.get("Visit_date")
